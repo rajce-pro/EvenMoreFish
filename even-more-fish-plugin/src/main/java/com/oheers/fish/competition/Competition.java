@@ -470,6 +470,7 @@ public class Competition {
             message.setPosition(Integer.toString(pos));
             message.setRarity(entry.getFish().getRarity().getDisplayName());
             message.setFishCaught(entry.getFish().getDisplayName());
+            message.setVariable("{catches}", Integer.toString(entry.getCatches()));
 
             leaderboard.add(message.getComponentMessage());
         }
@@ -673,6 +674,7 @@ public class Competition {
             UUID uuid = entry.getPlayer();
             config.set("leaderboard." + uuid + ".fish", entry.getFish().getRarityKey().toString());
             config.set("leaderboard." + uuid + ".value", entry.getValue());
+            config.set("leaderboard." + uuid + ".catches", entry.getCatches());
             config.set("leaderboard." + uuid + ".time", entry.getTime());
         }
         base.save();

@@ -80,10 +80,10 @@ length-lore:
 # The format of the leaderboard after a competition is over
 leaderboard:
   largest-fish: '<white>#{position} | {player} (<b>{rarity}</b> {fish}, {length}cm)'
-  largest-total: '<white>#{position} | {player} <white>({amount}cm<white>)'
+  largest-total: '<white>#{position} | {player} <white>({amount}cm<white>, {catches} <white>fish)'
   most-fish: '<white>#{position} | {player} <white>({amount} <white>fish)'
   shortest-fish: '<white>#{position} | {player} <white>(<b>{rarity}</b> {fish}<white>, {length}cm<white>)'
-  shortest-total: '<white>#{position} | {player} <white>({amount}cm<white>)'
+  shortest-total: '<white>#{position} | {player} <white>({amount}cm<white>, {catches} <white>fish)'
   # Sent when a competition only has a single winner, in place of the leaderboard.
   single-winner: <white>{player} has won the competition for {type}. Congratulations!
   # This shows the number of players currently in the competition, set to "" to disable.
@@ -171,6 +171,9 @@ emf-lengthless-fish-format: "<white><b>{rarity}</b> {fish}"
 emf-most-fish-format: "<white>{amount} fish"
 # What should be displayed for %emf_competition_place_size_*% during the MOST_FISH competition?
 emf-size-during-most-fish: N/A
+# How should %emf_competition_place_fish_*% be formatted during LARGEST/SHORTEST_TOTAL competitions?
+# {amount} is the number of fish caught, {length} is the total length.
+emf-total-fish-format: "<white>{amount} fish ({length}cm)"
 # How the %emf_competition_time_left% placeholder should be formatted.
 emf-time-remaining:
   # When there is not an active competition.

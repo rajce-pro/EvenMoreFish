@@ -37,6 +37,14 @@ public interface CompetitionType extends RegistryItem {
 
     boolean isSingleReward();
 
+    /**
+     * @return Whether this type sums up all of a player's catches (e.g. LARGEST_TOTAL), meaning a single fish
+     * does not represent the player's leaderboard entry.
+     */
+    default boolean isTotalType() {
+        return false;
+    }
+
     default boolean register() {
         return CompetitionTypeRegistry.getInstance().register(this);
     }
@@ -170,6 +178,11 @@ public interface CompetitionType extends RegistryItem {
         @Override
         public boolean isSingleReward() {
             return ref.isSingleReward();
+        }
+
+        @Override
+        public boolean isTotalType() {
+            return ref.isTotalType();
         }
 
         @Override

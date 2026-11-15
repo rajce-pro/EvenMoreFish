@@ -163,6 +163,7 @@ public enum ConfigMessage {
     PLACEHOLDER_FISH_FORMAT(PrefixType.NONE, "emf-competition-fish-format"),
     PLACEHOLDER_FISH_LENGTHLESS_FORMAT(PrefixType.NONE, "emf-lengthless-fish-format"),
     PLACEHOLDER_FISH_MOST_FORMAT(PrefixType.NONE, "emf-most-fish-format"),
+    PLACEHOLDER_FISH_TOTAL_FORMAT(PrefixType.NONE, "emf-total-fish-format"),
     PLACEHOLDER_NO_COMPETITION_RUNNING(PrefixType.NONE, "no-competition-running"),
     PLACEHOLDER_NO_COMPETITION_RUNNING_FISH(PrefixType.NONE, "no-competition-running-fish"),
     PLACEHOLDER_NO_COMPETITION_RUNNING_SIZE(PrefixType.NONE, "no-competition-running-size"),

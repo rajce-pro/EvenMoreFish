@@ -324,6 +324,7 @@ public class CompetitionManager extends AbstractFileBasedManager<CompetitionFile
             }
             CompetitionEntry entry = new CompetitionEntry(player, rarityKey.getFish(), type);
             entry.value = entrySection.getFloat("value");
+            entry.catches = entrySection.getInt("catches", 1);
             entry.time = entrySection.getLong("time");
             competition.leaderboard.addEntry(entry);
         });

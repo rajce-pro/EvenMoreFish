@@ -12,6 +12,7 @@ public class CompetitionEntry {
     private final IFish fish;
     protected long time;
     protected float value = 0.0F;
+    protected int catches = 0;
     private final CompetitionType type;
 
     public CompetitionEntry(UUID player, IFish fish, CompetitionType type) {
@@ -30,6 +31,7 @@ public class CompetitionEntry {
         this.fish = entry.fish;
         this.time = Instant.now().toEpochMilli();
         this.value = entry.value;
+        this.catches = entry.catches;
         this.type = entry.type;
     }
 
@@ -45,6 +47,7 @@ public class CompetitionEntry {
     }
 
     public void trackFish(@NonNull IFish fish) {
+        catches++;
         if (type.useFishLength()) {
             if (!fish.isLengthless()) {
                 value += fish.getLength();
@@ -72,6 +75,17 @@ public class CompetitionEntry {
 
     public void setValue(float value) {
         this.value = value;
+    }
+
+    /**
+     * @return The total number of fish tracked by this entry during the competition.
+     */
+    public int getCatches() {
+        return catches;
+    }
+
+    public void setCatches(int catches) {
+        this.catches = catches;
     }
 
     public UUID getPlayer() {
