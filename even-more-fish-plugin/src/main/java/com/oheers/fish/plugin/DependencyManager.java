@@ -191,6 +191,10 @@ public class DependencyManager implements Listener {
     }
 
     private void configureInventoryGui() {
+        // InventoryGui only runs a GUI's close action (and InventoryGui#getOpen only works) while GUI history is enabled.
+        // It is disabled by default, which skipped every close action, so items left in the sell/apply baits GUIs
+        // vanished when the GUI was closed with Esc instead of being returned to the player.
+        InventoryGui.ENABLE_HISTORY = true;
         GlobalConfigActions.register("full-exit", (configGui, inventoryGui, click) -> {
             doRescue(configGui, inventoryGui);
             click.getWhoClicked().closeInventory();
