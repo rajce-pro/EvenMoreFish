@@ -6,6 +6,7 @@ import com.oheers.fish.config.EMFConfigReader;
 import com.oheers.fish.config.GuiFillerConfig;
 import com.oheers.fish.config.gui.GuiConfig;
 import com.oheers.fish.items.ItemFactory;
+import de.themoep.inventorygui.GuiElement;
 import de.themoep.inventorygui.GuiStorageElement;
 import de.themoep.inventorygui.InventoryGui;
 import de.themoep.inventorygui.StaticGuiElement;
@@ -47,16 +48,30 @@ public abstract class EMFConfigGui extends de.themoep.inventorygui.config.Config
 
     @Override
     public void configureGui(InventoryGui inventoryGui) {
-        // An air filler (e.g. "filler: air") has no ItemMeta, which makes InventoryGui throw an NPE
-        // when it tries to name the item. Replace it with an empty filler instead.
-        if (inventoryGui.getFiller() instanceof StaticGuiElement filler) {
-            ItemStack fillerItem = filler.getRawItem();
-            if (fillerItem != null && fillerItem.getType().isAir()) {
-                inventoryGui.setFiller(null);
-            }
-        }
+        ensureFillerBlocksClicks(inventoryGui);
         loadItems(inventoryGui, GuiFillerConfig.getInstance().getSupplier()); // Loads filler items.
         configure(inventoryGui);
+    }
+
+    /**
+     * Makes sure empty filler slots can't hold items.
+     * <p>
+     * When the filler is missing (e.g. "filler: null") or air, the filler slots have no click action, so InventoryGui
+     * lets vanilla place items into them. Those items end up in the GUI inventory rather than any storage, and vanish
+     * once the GUI is closed. An air filler would also make InventoryGui throw an NPE, as air has no ItemMeta.
+     * Replace such fillers with an empty element that cancels every click.
+     */
+    private void ensureFillerBlocksClicks(InventoryGui inventoryGui) {
+        GuiElement filler = inventoryGui.getFiller();
+        if (filler instanceof StaticGuiElement staticFiller) {
+            ItemStack fillerItem = staticFiller.getRawItem();
+            if (fillerItem != null && !fillerItem.getType().isAir()) {
+                return;
+            }
+        } else if (filler != null) {
+            return;
+        }
+        inventoryGui.addElement(new StaticGuiElement(' ', null, click -> true));
     }
 
     public abstract void configure(InventoryGui inventoryGui);
