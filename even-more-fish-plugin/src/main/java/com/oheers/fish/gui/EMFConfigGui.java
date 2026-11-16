@@ -8,6 +8,7 @@ import com.oheers.fish.config.gui.GuiConfig;
 import com.oheers.fish.items.ItemFactory;
 import de.themoep.inventorygui.GuiStorageElement;
 import de.themoep.inventorygui.InventoryGui;
+import de.themoep.inventorygui.StaticGuiElement;
 import dev.dejvokep.boostedyaml.block.implementation.Section;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.HumanEntity;
@@ -46,6 +47,14 @@ public abstract class EMFConfigGui extends de.themoep.inventorygui.config.Config
 
     @Override
     public void configureGui(InventoryGui inventoryGui) {
+        // An air filler (e.g. "filler: air") has no ItemMeta, which makes InventoryGui throw an NPE
+        // when it tries to name the item. Replace it with an empty filler instead.
+        if (inventoryGui.getFiller() instanceof StaticGuiElement filler) {
+            ItemStack fillerItem = filler.getRawItem();
+            if (fillerItem != null && fillerItem.getType().isAir()) {
+                inventoryGui.setFiller(null);
+            }
+        }
         loadItems(inventoryGui, GuiFillerConfig.getInstance().getSupplier()); // Loads filler items.
         configure(inventoryGui);
     }
